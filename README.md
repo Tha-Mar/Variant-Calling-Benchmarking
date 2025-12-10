@@ -4,7 +4,7 @@ Benchmarking BCFtools, FreeBayes, and GATK HaplotypeCaller on simulated chr20 da
 
 ## Setup
 
-Need conda. Install everything with:
+Need conda for the tools. Install everything with:
 
 ```bash
 conda create -n variantcall -c bioconda -c conda-forge \
@@ -19,11 +19,11 @@ conda activate variantcall
 bash run_pipeline.sh
 ```
 
-Takes about 2-3 hours. FreeBayes is slow.
+Takes about 2-3 hours. FreeBayes is the slowest due to single thread limitation.
 
 ## What it does
 
-1. Downloads chr20 from Ensembl (release 112)
+1. Downloads chr20 from Ensembl 
 2. Indexes it with samtools, BWA-MEM2, and GATK
 3. Simulates 6.5M read pairs with wgsim (30x coverage, 0.1% mutation rate, 15% indels)
 4. Converts wgsim truth output to VCF
@@ -116,14 +116,24 @@ python scripts/plot_results.py
 
 `GATK fails with dict error` - run `gatk CreateSequenceDictionary -R data/chr20/chr20.fa`
 
-`command not found` - activate the conda environment
+### Citations
 
-## Citations
+**BCFtools / SAMtools**
+Li H., Handsaker B., Wysoker A., et al.  
+The Sequence Alignment/Map format and SAMtools.  
+Bioinformatics (2009) 25(16):2078–2079.
 
-BCFtools: Li H. (2011) Bioinformatics. 27(21):2987-93
+**FreeBayes**
+Garrison E., Marth G.  
+Haplotype-based variant detection from short-read sequencing.  
+arXiv:1207.3907 (2012).
 
-FreeBayes: Garrison E, Marth G. (2012) arXiv:1207.3907
+**GATK**
+McKenna A., Hanna M., Banks E., et al.  
+The Genome Analysis Toolkit: A MapReduce framework for analyzing next-generation DNA sequencing data.  
+Genome Research (2010) 20:1297–1303.
 
-GATK: McKenna A, et al. (2010) Genome Res. 20:1297-303
-
-BWA-MEM2: Vasimuddin Md, et al. (2019) IEEE IPDPS
+**BWA-MEM2**
+Vasimuddin Md., Misra S., Li H., Aluru S.  
+Efficient Architecture-Aware Acceleration of BWA-MEM for Multicore Systems.  
+IEEE IPDPS (2019).

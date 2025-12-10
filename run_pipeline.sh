@@ -39,5 +39,3 @@ bash scripts/evaluate_calls.sh > results/metrics/accuracy_summary.txt
 
 # plot
 python scripts/plot_results.py
-
-echo "done. check results/plots/ and results/metrics/accuracy_summary.txt"
