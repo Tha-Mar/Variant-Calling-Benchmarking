@@ -14,7 +14,6 @@ set -euo pipefail
 bcftools index -t results/vcf/bcftools.vcf.gz
 
 #run freebayes, this also captures the runtime and additional metrics using the -v flag
-#this uses the freebayes algorithm to call the variants
 #freebayes is single threaded by default and cant run with multiple threads unless you use freebayes-parallel
 /usr/bin/time -v \
   freebayes -f data/chr20/chr20.fa output/bwa-mem2/sim-alignment.bam \
@@ -26,7 +25,6 @@ bgzip -f results/vcf/freebayes.vcf
 tabix -p vcf results/vcf/freebayes.vcf.gz
 
 #run gatk haplotype caller, this also captures the runtime and additional metrics using the -v flag
-#this uses the gatk haplotype caller algorithm to call the variants
 #ran using 4 threads
 /usr/bin/time -v \
   gatk HaplotypeCaller \
