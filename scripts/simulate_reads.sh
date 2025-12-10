@@ -1,3 +1,8 @@
+#create sequence dict for gatk
+gatk CreateSequenceDictionary \
+  -R data/chr20/chr20.fa \
+  -O data/chr20/chr20.dict
+
 #create simulated reads using wgsim 
 
 #this command generates 6,551,823 forward and reverse reads at 150 length each to achieve approximately 30x coverage.

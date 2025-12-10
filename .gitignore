@@ -1,0 +1,9 @@
+data/raw-sim/*
+data/truth/*
+output/bwa-mem2/*
+results/vcf/*
+results/metrics/*
+results/eval/*
+results/plots/*
+data/chr20/*
+Miniconda*.sh
