@@ -3,9 +3,20 @@ gatk CreateSequenceDictionary \
   -R data/chr20/chr20.fa \
   -O data/chr20/chr20.dict
 
-#create simulated reads using wgsim 
-
-#this command generates 6,551,823 forward and reverse reads at 150 length each to achieve approximately 30x coverage.
-#it sets a mutation rate at .001 with 15% being indels and 85% substitutions
+#create simulated reads using wgsim
 wgsim -N 6551823 -1 150 -2 150 -r 0.001 -R 0.15 -S 42 data/chr20/chr20.fa \
-    data/raw-sim/R1.fq data/raw-sim/R2.fq > data/truth/truth.vcf
+    data/raw-sim/R1.fq data/raw-sim/R2.fq > data/truth/truth_raw.txt
+
+# convert wgsim output to vcf
+echo -e "##fileformat=VCFv4.2\n##contig=<ID=20,length=64444167>\n#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO" > data/truth/truth.vcf
+awk 'NR > 3 {
+    chrom=$1; pos=$2; ref=$3; alt=$4;
+    if (alt == "M") alt="C";
+    if (alt == "W") alt="T";
+    if (alt == "Y") alt="T";
+    if (alt == "R") alt="G";
+    if (alt == "K") alt="T";
+    if (alt == "S") alt="C";
+    if (alt == "-") next;
+    print chrom "\t" pos "\t.\t" ref "\t" alt "\t.\tPASS\t.";
+}' data/truth/truth_raw.txt >> data/truth/truth.vcf
